@@ -11,6 +11,8 @@ author = "Neil Radley"
 
 ![alt text] (./images/nr.png "Neil Radley)
 
+**Contact** nradley@gmail.com
+
 Hi and thanks for stopping by.
 
 My name is Neil and I'm a senior Devops engineer at a UK based investment funding company. I've been in the IT industry for more years than I'm going to admit to here. :smile:
@@ -32,7 +34,6 @@ I specialise in Infrastructure as Code using Terraform and Ansible on AWS.
 * Kubernetes
 * Red Hat Identity Manager (IDM)
 * Freeipa
-
 
 ### **Operating Systems Administration**
 
