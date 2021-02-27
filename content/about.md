@@ -9,7 +9,7 @@ author = "Neil Radley"
 ## So you want to know about me
 
 
-![alt text] (./images/nr.png "Neil Radley")
+![alt text] (images/nr.png "Neil Radley")
 
 **Contact** nradley@gmail.com
 
