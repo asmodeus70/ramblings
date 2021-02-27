@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>index on Radders&#39; Ramblings</title>
+    <link>https://raddersramblings.com/tags/index/</link>
+    <description>Recent content in index on Radders&#39; Ramblings</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2021, Neil Radley; all rights reserved.</copyright><atom:link href="https://raddersramblings.com/tags/index/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Posts</title>
+      <link>https://raddersramblings.com/post/</link>
+      <pubDate>Sat, 27 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://raddersramblings.com/post/</guid>
+      <description>
+        
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

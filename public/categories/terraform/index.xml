@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Terraform on Radders&#39; Ramblings</title>
+    <link>https://raddersramblings.com/categories/terraform/</link>
+    <description>Recent content in Terraform on Radders&#39; Ramblings</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2021, Neil Radley; all rights reserved.</copyright>
+    <lastBuildDate>Sat, 27 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://raddersramblings.com/categories/terraform/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Managing secrets in Terraform</title>
+      <link>https://raddersramblings.com/post/terraform-secrets/</link>
+      <pubDate>Sat, 27 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://raddersramblings.com/post/terraform-secrets/</guid>
+      <description>
+        
+          &lt;p&gt;Managing secrets in Terraform can be daunting especially when plans are stored in plain text. But it doesn&#39;t have to be this way.&lt;/p&gt;
+&lt;p&gt;In this article I&#39;m going to cover severlal methods of storing and accessing secrets that can be applied easily and could also be used in other tools such as Ansible and even Bash.&lt;/p&gt;
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>
