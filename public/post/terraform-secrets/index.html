@@ -161,6 +161,67 @@
     
     <p>Managing secrets in Terraform can be daunting especially when plans are stored in plain text. But it doesn't have to be this way.</p>
 <p>In this article I'm going to cover severlal methods of storing and accessing secrets that can be applied easily and could also be used in other tools such as Ansible and even Bash.</p>
+<p>Prerequisites</p>
+<p>In order to follow this tutorial, you will need the following:</p>
+<p>The <a href="https://learn.hashicorp.com/tutorials/terraform/install-cli">Terraform CLI</a>, version 0.14 or later.</p>
+<p>AWS Credentials <a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication">configured for use with Terraform</a>.</p>
+<p>The <a href="https://git-scm.com/downloads">git CLI</a>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-terraform" data-lang="terraform"><span class="ln">1</span><span class="kr">data</span> <span class="s2">&#34;aws_secretsmanager_secret_version&#34;</span> <span class="s2">&#34;db_passwd&#34;</span> <span class="p">{</span>
+<span class="ln">2</span>  <span class="na">secret_id</span> = <span class="s2">&#34;idm_admin_password.id&#34;</span>
+<span class="ln">3</span><span class="p">}</span>
+</code></pre></div><p>Decode the json file.</p>
+<div class="highlight"><pre class="chroma"><code class="language-terraform" data-lang="terraform"><span class="ln">1</span><span class="kr">output</span> <span class="s2">&#34;secrets&#34;</span> <span class="p">{</span>
+<span class="ln">2</span>  <span class="na">value</span> =<span class="nb"> jsondecode</span><span class="p">(</span><span class="nb">data</span><span class="p">.</span><span class="nx">aws_secretsmanager_secret_version</span><span class="p">.</span><span class="nx">db_passwd</span><span class="p">.</span><span class="nx">secret_string</span><span class="p">)</span>
+<span class="ln">3</span>  <span class="na">sensitive</span> = <span class="kc">true</span>
+<span class="ln">4</span><span class="p">}</span>
+</code></pre></div><p><strong>NOTE:</strong> The <strong>sensitive</strong> option is only available in Terraform 0.14 and above</p>
+<div class="highlight"><pre class="chroma"><code class="language-terraform" data-lang="terraform"><span class="ln"> 1</span><span class="kr">resource</span> <span class="s2">&#34;aws_db_instance&#34;</span> <span class="s2">&#34;primary&#34;</span> <span class="p">{</span>
+<span class="ln"> 2</span>  <span class="na">allocated_storage</span>    = <span class="m">10</span>
+<span class="ln"> 3</span>  <span class="na">engine</span>               = <span class="s2">&#34;mysql&#34;</span>
+<span class="ln"> 4</span>  <span class="na">engine_version</span>       = <span class="s2">&#34;5.7&#34;</span>
+<span class="ln"> 5</span>  <span class="na">instance_class</span>       = <span class="s2">&#34;db.t3.medium&#34;</span>
+<span class="ln"> 6</span>  <span class="na">name</span>                 = <span class="s2">&#34;Craft&#34;</span>
+<span class="ln"> 7</span>  <span class="na">username</span>             = <span class="nb">module</span><span class="p">.</span><span class="nx">secrets</span><span class="p">.</span><span class="nx">username</span>
+<span class="ln"> 8</span>  <span class="na">password</span>             = <span class="nb">module</span><span class="p">.</span><span class="nx">secrets</span><span class="p">.</span><span class="nx">password</span>
+<span class="ln"> 9</span>  <span class="na">parameter_group_name</span> = <span class="s2">&#34;default.mysql5.7&#34;</span>
+<span class="ln">10</span>  <span class="na">skip_final_snapshot</span>  = <span class="kc">true</span>
+<span class="ln">11</span><span class="p">}</span>
+</code></pre></div><h3 id="pros">Pros</h3>
+<ul>
+<li>No plain text secrets are stored in terraform files or version control.</li>
+<li>Because everything is codified there's no need for external scripts or wrappers.</li>
+<li>AWS logs all transactions to the secrets manager so it's easy to see who did what and when.</li>
+<li>As I hinted at the start because the data is stored in AWS it can be accessed using the API so effectively any application can use the data not just Terraform.</li>
+</ul>
+<h3 id="cons">Cons</h3>
+<ul>
+<li>Cost! At the time of writing is costs $0.40 per secret per month. For secrets that are stored for less than a month, the price is prorated (based on the number of hours.) And on top of that there's $0.05 per 10,000 API calls. <a href="https://aws.amazon.com/secrets-manager/pricing/">See this link for example costings</a></li>
+</ul>
+<h3 id="alternatives">Alternatives</h3>
+<p>You could use AWS SSM Parameter Store. It's very simple to use in Terraform and other tools including Ansible or even Bash scripts.</p>
+<p>This is all that's required.</p>
+<div class="highlight"><pre class="chroma"><code class="language-terraform" data-lang="terraform"><span class="ln">1</span><span class="kr">data</span> <span class="s2">&#34;aws_ssm_parameter&#34;</span> <span class="s2">&#34;user&#34;</span> <span class="p">{</span>
+<span class="ln">2</span>  <span class="na">name</span>            = <span class="s2">&#34;db_user&#34;</span>
+<span class="ln">3</span>  <span class="na">with_decryption</span> = <span class="kc">true</span>
+<span class="ln">4</span><span class="p">}</span>
+<span class="ln">5</span><span class="kr">
+</span><span class="ln">6</span><span class="kr">data</span> <span class="s2">&#34;aws_ssm_parameter&#34;</span> <span class="s2">&#34;passwd&#34;</span> <span class="p">{</span>
+<span class="ln">7</span>  <span class="na">name</span>            = <span class="s2">&#34;db_passwd&#34;</span>
+<span class="ln">8</span>  <span class="na">with_decryption</span> = <span class="kc">true</span>
+<span class="ln">9</span><span class="p">}</span>
+</code></pre></div><p>And then use it like this.</p>
+<div class="highlight"><pre class="chroma"><code class="language-terraform" data-lang="terraform"><span class="ln"> 1</span><span class="kr">resource</span> <span class="s2">&#34;aws_db_instance&#34;</span> <span class="s2">&#34;primary&#34;</span> <span class="p">{</span>
+<span class="ln"> 2</span>  <span class="na">allocated_storage</span>    = <span class="m">10</span>
+<span class="ln"> 3</span>  <span class="na">engine</span>               = <span class="s2">&#34;mysql&#34;</span>
+<span class="ln"> 4</span>  <span class="na">engine_version</span>       = <span class="s2">&#34;5.7&#34;</span>
+<span class="ln"> 5</span>  <span class="na">instance_class</span>       = <span class="s2">&#34;db.t3.medium&#34;</span>
+<span class="ln"> 6</span>  <span class="na">name</span>                 = <span class="s2">&#34;Craft&#34;</span>
+<span class="ln"> 7</span>  <span class="na">username</span>             = <span class="nb">data</span><span class="p">.</span><span class="nx">aws_ssm_parameter</span><span class="p">.</span><span class="nx">user</span>
+<span class="ln"> 8</span>  <span class="na">password</span>             = <span class="nb">data</span><span class="p">.</span><span class="nx">aws_ssm_parameter</span><span class="p">.</span><span class="nx">passwd</span>
+<span class="ln"> 9</span>  <span class="na">parameter_group_name</span> = <span class="s2">&#34;default.mysql5.7&#34;</span>
+<span class="ln">10</span>  <span class="na">skip_final_snapshot</span>  = <span class="kc">true</span>
+<span class="ln">11</span><span class="p">}</span>
+</code></pre></div><p>The first thing to notice is that there are now two entries. One for the user and one for the password. Ok so it's a bit more coding but it is elegant.</p>
 
       true
   </article>
