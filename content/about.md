@@ -6,9 +6,9 @@ aliases = ["about-me", "contact"]
 author = "Neil Radley"
 +++
 
-## So you want to know about me
+## Want to know about me?
 
-![:inline](/images/nr.png)
+![::round](/images/nr.png)
 
 **Contact** nradley@gmail.com
 
