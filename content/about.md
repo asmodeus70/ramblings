@@ -8,7 +8,7 @@ author = "Neil Radley"
 
 ## So you want to know about me
 
-![:inline](./../public/images/nr.png)
+![::round](./../public/images/nr.png)
 
 **Contact** nradley@gmail.com
 
