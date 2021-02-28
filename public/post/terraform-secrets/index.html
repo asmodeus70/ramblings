@@ -168,12 +168,12 @@
 <p>The <a href="https://git-scm.com/downloads">git CLI</a>.</p>
 <p>To start login to the AWS Console and navigate to <a href="https://eu-west-1.console.aws.amazon.com/secretsmanager/home?region=eu-west-1#!/home">AWS Secrets Manager</a> and click <strong>Store a new secret</strong></p>
 <p>Next select <strong>Other type of secrets</strong> followed by <strong>Plaintext</strong>.</p>
-<p><img src="./images/New_Secret.png" alt="Store a new secret"></p>
+<p><img src="/images/New_Secret.png" alt="Store a new secret"></p>
 <p>Fill out the required secrets information and click <strong>Next</strong></p>
 <p>Now give your secret a name and maybe a description for future reference.</p>
-<p><img src="./images/secret_name_and_description.png" alt="Secret name and description"></p>
+<p><img src="/images/secret_name_and_description.png" alt="Secret name and description"></p>
 <p>Depending on your needs you can now set up auto rotation (an excellent idea for RDS) however for this example just leave it as disabled.</p>
-<p><img src="./images/secret_rotation.png" alt="Configure automatic rotation"></p>
+<p><img src="/images/secret_rotation.png" alt="Configure automatic rotation"></p>
 <p>Check the <strong>Review</strong> page and if everything is ok click <strong>Store</strong></p>
 <p>So now that we have a stored secret we can start using it in our Terraform code with the <em><strong>aws_secretsmanager_secret_version</strong></em> parameter.</p>
 <div class="highlight"><pre class="chroma"><code class="language-terraform" data-lang="terraform"><span class="ln">1</span><span class="kr">data</span> <span class="s2">&#34;aws_secretsmanager_secret_version&#34;</span> <span class="s2">&#34;idm_admin_password&#34;</span> <span class="p">{</span>
@@ -197,7 +197,7 @@
 <span class="ln">10</span>  <span class="na">skip_final_snapshot</span>  = <span class="kc">true</span>
 <span class="ln">11</span><span class="p">}</span>
 </code></pre></div><p>After doing a <code>terraform plan</code> you will see in the output that the password is marked as a <strong>sensive value</strong></p>
-<p><img src="./images/sensitive.png" alt="Terraform plan output"></p>
+<p><img src="/images/sensitive.png" alt="Terraform plan output"></p>
 <h3 id="pros">Pros</h3>
 <ul>
 <li>No plain text secrets are stored in terraform files or version control.</li>
@@ -213,9 +213,9 @@
 <p>You could use AWS SSM Parameter Store. It's very simple to use in Terraform and other tools including Ansible or even Bash scripts.</p>
 <p>Start by navigating to <a href="https://eu-west-1.console.aws.amazon.com/systems-manager/home?region=eu-west-1#">AWS Systems Manager</a> and look down the left hand menu for <strong>Parameter Store</strong></p>
 <p>Click <strong>Create parameter</strong> and give the parameter a name (for example username) and give it a value that suits you.</p>
-<p><img src="./images/parameter_store_username.png" alt="Parameter store user"></p>
+<p><img src="/images/parameter_store_username.png" alt="Parameter store user"></p>
 <p>Do the same again for the password but this time select the <strong>SecureString</strong> option so that the contents are encrypted. For this you will need to choose an encryption method that fits your requirements. I'm choosing the default <strong>KMS key source</strong> in <strong>My current account</strong>.</p>
-<p><img src="./images/encrypted_ssm_password.png" alt="Encrypted password settings"></p>
+<p><img src="/images/encrypted_ssm_password.png" alt="Encrypted password settings"></p>
 <p>This is all that's required.</p>
 <div class="highlight"><pre class="chroma"><code class="language-terraform" data-lang="terraform"><span class="ln">1</span><span class="kr">data</span> <span class="s2">&#34;aws_ssm_parameter&#34;</span> <span class="s2">&#34;user&#34;</span> <span class="p">{</span>
 <span class="ln">2</span>  <span class="na">name</span>            = <span class="s2">&#34;idm_admin_user&#34;</span>
