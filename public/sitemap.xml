@@ -1,69 +1,43 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
-    <loc>https://raddersramblings.com/</loc>
+    <loc>https://www.radleysramblings.com/</loc>
     <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://raddersramblings.com/archives/</loc>
+  </url><url>
+    <loc>https://www.radleysramblings.com/archives/</loc>
     <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://raddersramblings.com/about/</loc>
+  </url><url>
+    <loc>https://www.radleysramblings.com/about/</loc>
     <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://raddersramblings.com/categories/</loc>
+  </url><url>
+    <loc>https://www.radleysramblings.com/categories/</loc>
     <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://raddersramblings.com/post/terraform-secrets/</loc>
+  </url><url>
+    <loc>https://www.radleysramblings.com/post/terraform-secrets/</loc>
     <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://raddersramblings.com/post/</loc>
+  </url><url>
+    <loc>https://www.radleysramblings.com/post/</loc>
     <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://raddersramblings.com/tags/secrets/</loc>
+  </url><url>
+    <loc>https://www.radleysramblings.com/tags/secrets/</loc>
     <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://raddersramblings.com/series/</loc>
+  </url><url>
+    <loc>https://www.radleysramblings.com/series/</loc>
     <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://raddersramblings.com/tags/</loc>
+  </url><url>
+    <loc>https://www.radleysramblings.com/tags/</loc>
     <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://raddersramblings.com/series/terraform/</loc>
+  </url><url>
+    <loc>https://www.radleysramblings.com/series/terraform/</loc>
     <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://raddersramblings.com/categories/terraform/</loc>
+  </url><url>
+    <loc>https://www.radleysramblings.com/categories/terraform/</loc>
     <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://raddersramblings.com/tags/terraform/</loc>
+  </url><url>
+    <loc>https://www.radleysramblings.com/tags/terraform/</loc>
     <lastmod>2021-02-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.radleysramblings.com/tags/index/</loc>
   </url>
-  
-  <url>
-    <loc>https://raddersramblings.com/tags/index/</loc>
-  </url>
-  
 </urlset>

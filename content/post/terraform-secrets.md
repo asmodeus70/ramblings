@@ -35,17 +35,17 @@ To start login to the AWS Console and navigate to [AWS Secrets Manager](https://
 
 Next select **Other type of secrets** followed by **Plaintext**.
 
-![Store a new secret](./../../public/images/New_Secret.png)
+![Store a new secret](mages/New_Secret.png)
 
 Fill out the required secrets information and click **Next**
 
 Now give your secret a name and maybe a description for future reference.
 
-![Secret name and description](./../../public/images/secret_name_and_description.png)
+![Secret name and description](images/secret_name_and_description.png)
 
 Depending on your needs you can now set up auto rotation (an excellent idea for RDS) however for this example just leave it as disabled.
 
-![Configure automatic rotation](./../../public/images/secret_rotation.png)
+![Configure automatic rotation](images/secret_rotation.png)
 
 Check the **Review** page and if everything is ok click **Store**
 
@@ -85,7 +85,7 @@ resource "aws_db_instance" "primary" {
 
 After doing a `terraform plan` you will see in the output that the password is marked as a **sensive value**
 
-![Terraform plan output](./../../public/images/sensitive.png)
+![Terraform plan output](images/sensitive.png)
 
 ### Pros
 
@@ -106,11 +106,11 @@ Start by navigating to [AWS Systems Manager](https://eu-west-1.console.aws.amazo
 
 Click **Create parameter** and give the parameter a name (for example username) and give it a value that suits you.
 
-![Parameter store user](./../../public/images/parameter_store_username.png)
+![Parameter store user](images/parameter_store_username.png)
 
 Do the same again for the password but this time select the **SecureString** option so that the contents are encrypted. For this you will need to choose an encryption method that fits your requirements. I'm choosing the default **KMS key source** in **My current account**.
 
-![Encrypted password settings](./../../public/images/encrypted_ssm_password.png)
+![Encrypted password settings](images/encrypted_ssm_password.png)
 
 
 This is all that's required.
