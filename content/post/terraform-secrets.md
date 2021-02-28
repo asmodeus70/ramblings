@@ -19,11 +19,11 @@ thumbnail = "images/top_secret.webp"
 Managing secrets in Terraform can be daunting especially when plans are stored in plain text. But it doesn't have to be this way.
 <!--more-->
 
-In this article I'm going to cover severlal methods of storing and accessing secrets that can be applied easily and could also be used in other tools such as Ansible and even Bash.
+In this article I'm going to cover several methods of storing and accessing secrets that can be applied easily and could also be used in other tools such as Ansible and even Bash.
 
 Prerequisites
 
-In order to follow this tutorial, you will need the following:
+In order to try any technique laid out in this article you will need the following:
 
 The [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli), version 0.14 or later.
 
@@ -31,18 +31,38 @@ AWS Credentials [configured for use with Terraform](https://registry.terraform.i
 
 The [git CLI](https://git-scm.com/downloads).
 
+To start login to the AWS Console and navigate to [AWS Secrets Manager](https://eu-west-1.console.aws.amazon.com/secretsmanager/home?region=eu-west-1#!/home) and click **Store a new secret**
+
+Next select **Other type of secrets** followed by **Plaintext**.
+
+![Store a new secret](./images/New_Secret.png)
+
+Fill out the required secrets information and click **Next**
+
+Now give your secret a name and maybe a description for future reference.
+
+![Secret name and description](./images/secret_name_and_description.png)
+
+Depending on your needs you can now set up auto rotation (an excellent idea for RDS) however for this example just leave it as disabled.
+
+![Configure automatic rotation](./images/secret_rotation.png)
+
+Check the **Review** page and if everything is ok click **Store**
+
+So now that we have a stored secret we can start using it in our Terraform code with the ***aws_secretsmanager_secret_version*** parameter.
+
 
 ```terraform
-data "aws_secretsmanager_secret_version" "db_passwd" {
-  secret_id = "idm_admin_password.id"
+data "aws_secretsmanager_secret_version" "idm_admin_password" {
+  secret_id = "idm_admin_password"
 }
 ```
 
-Decode the json file.
+Decode the json file (If you saved your secret as json that it :wink: ).
 
 ```terraform
-output "secrets" {
-  value = jsondecode(data.aws_secretsmanager_secret_version.db_passwd.secret_string)
+locals {
+  idm = jsondecode(data.aws_secretsmanager_secret_version.idm_admin_password.secret_string)
   sensitive = true
 }
 ```
@@ -56,12 +76,16 @@ resource "aws_db_instance" "primary" {
   engine_version       = "5.7"
   instance_class       = "db.t3.medium"
   name                 = "Craft"
-  username             = module.secrets.username
-  password             = module.secrets.password
+  username             = local.idm.username
+  password             = local.idm.password
   parameter_group_name = "default.mysql5.7"
   skip_final_snapshot  = true
 }
 ```
+
+After doing a `terraform plan` you will see in the output that the password is marked as a **sensive value**
+
+![Terraform plan output](./images/sensitive.png)
 
 ### Pros
 
@@ -78,16 +102,27 @@ resource "aws_db_instance" "primary" {
 
 You could use AWS SSM Parameter Store. It's very simple to use in Terraform and other tools including Ansible or even Bash scripts.
 
+Start by navigating to [AWS Systems Manager](https://eu-west-1.console.aws.amazon.com/systems-manager/home?region=eu-west-1#) and look down the left hand menu for **Parameter Store**
+
+Click **Create parameter** and give the parameter a name (for example username) and give it a value that suits you.
+
+![Parameter store user](./images/parameter_store_username.png)
+
+Do the same again for the password but this time select the **SecureString** option so that the contents are encrypted. For this you will need to choose an encryption method that fits your requirements. I'm choosing the default **KMS key source** in **My current account**.
+
+![Encrypted password settings](./images/encrypted_ssm_password.png)
+
+
 This is all that's required.
 
 ```terraform
 data "aws_ssm_parameter" "user" {
-  name            = "db_user"
-  with_decryption = true
+  name            = "idm_admin_user"
+  with_decryption = false
 }
 
 data "aws_ssm_parameter" "passwd" {
-  name            = "db_passwd"
+  name            = "idm_admin__password"
   with_decryption = true
 }
 ```
