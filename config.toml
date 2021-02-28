@@ -1,7 +1,7 @@
 # set `baseurl` to your root domain
 # if you set it to "/" share icons won't work properly on production
-baseurl = "https://raddersramblings.com/"  # Include trailing slash
-title = "Radders' Ramblings"
+baseurl = "https://radleysramblings.com/"  # Include trailing slash
+title = "Radleys' Ramblings"
 author = "Neil Radley"
 copyright = "Copyright © 2021, Neil Radley; all rights reserved."
 # canonifyurls = true
