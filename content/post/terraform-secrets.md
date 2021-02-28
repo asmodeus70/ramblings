@@ -35,17 +35,17 @@ To start login to the AWS Console and navigate to [AWS Secrets Manager](https://
 
 Next select **Other type of secrets** followed by **Plaintext**.
 
-![Store a new secret](./images/New_Secret.png)
+![Store a new secret](images/New_Secret.png)
 
 Fill out the required secrets information and click **Next**
 
 Now give your secret a name and maybe a description for future reference.
 
-![Secret name and description](./images/secret_name_and_description.png)
+![Secret name and description](images/secret_name_and_description.png)
 
 Depending on your needs you can now set up auto rotation (an excellent idea for RDS) however for this example just leave it as disabled.
 
-![Configure automatic rotation](./images/secret_rotation.png)
+![Configure automatic rotation](images/secret_rotation.png)
 
 Check the **Review** page and if everything is ok click **Store**
 
@@ -85,7 +85,7 @@ resource "aws_db_instance" "primary" {
 
 After doing a `terraform plan` you will see in the output that the password is marked as a **sensive value**
 
-![Terraform plan output](./images/sensitive.png)
+![Terraform plan output](images/sensitive.png)
 
 ### Pros
 
